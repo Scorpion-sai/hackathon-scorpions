@@ -36,6 +36,7 @@ const BadgeContainer = styled.div`
     display: flex;
     gap: 4px;
     margin: 8px 0;
+    flex-wrap: wrap;
 `;
 
 const CardBody = styled.ul`
@@ -71,7 +72,7 @@ const PeopleDetail = ({ person }) => {
           </div>
           <div style={{ overflow: "hidden", padding: "16px 16px 16px 0px" }}>
             <NameContainer>{person.name}</NameContainer>
-            <p>{person.email}</p>
+            <p>{person.emailId}</p>
           </div>
         </div>
       }
@@ -80,15 +81,17 @@ const PeopleDetail = ({ person }) => {
         description={
           <CardBody>
             <BadgeContainer>
-              {person.technologies.map((tech) => (
+              {person.skills.map((tech) => (
                 <Badge count={tech} color={techColorMap[tech.toLowerCase()]} />
               ))}
             </BadgeContainer>
-            <li>Mobile: {person.mobile}</li>
-            <li>Skype ID: {person.mobile}</li>
-            <li>Job Role: {person.job}</li>
-            {person.experience && (
-              <li>Experience: {person.experience} years</li>
+            <li>Job Role: {person.currentDesignation}</li>
+            {person.yearsOfExperience != null &&
+              person.yearsOfExperience > 0 && (
+                <li>Experience: {person.yearsOfExperience} years</li>
+              )}
+            {person.areaOfInterest && (
+              <li>Interests: {person.areaOfInterest} years</li>
             )}
           </CardBody>
         }

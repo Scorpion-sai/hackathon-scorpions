@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
-const url = "https://course-api.com/react-useReducer-cart-project";
+const url = "http://localhost:8080/api/employee";
 
 const initialState = {
   isOpen: false,
@@ -13,7 +13,7 @@ export const registerUser = createAsyncThunk(
   "signup/registerUser",
   async (payload, thunkAPI) => {
     try {
-      const resp = await axios(url);
+      const resp = await axios.post(url, payload);
       return resp.data;
     } catch (err) {
       return thunkAPI.rejectWithValue("Something went wrong");
