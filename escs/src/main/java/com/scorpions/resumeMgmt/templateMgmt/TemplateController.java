@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 public class TemplateController {
-    @GetMapping("/resume/templates")
+/*    @GetMapping("/resume/templates")
     public ResponseEntity<GetResumeTemplatesResponse> getResumeTemplates() {
         // Implement getting available resume templates
         GetResumeTemplatesResponse response = new GetResumeTemplatesResponse();
@@ -33,5 +33,5 @@ public class TemplateController {
     public ResponseEntity<String> deleteTemplate(@PathVariable String templateId) {
         // Implement deleting a resume template by templateId
         return ResponseEntity.ok("Resume template deleted successfully");
-    }
+    }*/
 }

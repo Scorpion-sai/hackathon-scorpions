@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.*;
 public class ResumeController {
     
     // Resume Management APIs
-
+/*
     @PostMapping("/resume/upload")
     public ResponseEntity<String> uploadResume(@RequestBody UploadResumeRequest request) {
         // Implement uploading the resume for an employee
@@ -34,5 +34,5 @@ public class ResumeController {
     public ResponseEntity<String> editResume(@RequestBody EditResumeRequest request) {
         // Implement editing the resume for an employee
         return ResponseEntity.ok("Resume edited successfully");
-    }
+    }*/
 }
