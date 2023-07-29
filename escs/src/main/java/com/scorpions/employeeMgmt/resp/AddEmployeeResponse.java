@@ -4,5 +4,5 @@ import lombok.Data;
 
 @Data
 public class AddEmployeeResponse {
-    private String employeeId;
+    private Long employeeId;
 }

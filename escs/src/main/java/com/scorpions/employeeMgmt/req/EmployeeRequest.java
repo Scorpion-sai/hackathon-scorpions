@@ -6,7 +6,6 @@ import lombok.Data;
 @Data
 public class EmployeeRequest {
     private String name;
-    private String employeeId;
     private String emailId;
     private String gender;
     private String currentDesignation;
