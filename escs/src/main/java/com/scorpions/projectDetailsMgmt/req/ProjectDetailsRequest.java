@@ -12,6 +12,7 @@ public class ProjectDetailsRequest {
     private String roles;
     private String achievements;
     private String skillsUsed;
-    private String durationOfWork;
     private boolean showWithoutAuth;
+    private WorkDuration FromMonth;
+    private WorkDuration toMonth;
 }

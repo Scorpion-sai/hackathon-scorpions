@@ -1,9 +1,9 @@
-package com.scorpions.dao;
+package com.scorpions.service;
 
 import com.scorpions.entities.EmployeeProjectDetails;
 import java.util.List;
 
-public interface EmployeeProjectDao {
+public interface EmployeeProjectService {
 
     EmployeeProjectDetails saveEmpProjectDetails(EmployeeProjectDetails employee);
 
@@ -17,10 +17,7 @@ public interface EmployeeProjectDao {
 
     List<EmployeeProjectDetails> getDetailsByEmployeeId(String skills);
 
-    List<EmployeeProjectDetails> getDetailsByEmployeeName(String name);
-
-    List<EmployeeProjectDetails> getDetailsByEmployeeEmailId(String emailId);
-
     EmployeeProjectDetails getDetailsByProjectIdEmployeeId(Long projectId, Long employeeId);
-    
+
+    List<EmployeeProjectDetails> getDetailsByEmployeeName(String name);
 }

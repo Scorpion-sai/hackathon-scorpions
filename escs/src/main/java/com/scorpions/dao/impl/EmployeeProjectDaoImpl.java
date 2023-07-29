@@ -20,12 +20,12 @@ public class EmployeeProjectDaoImpl implements EmployeeProjectDao {
     }
 
     @Override
-    public EmployeeProjectDetails updateEmployee(EmployeeProjectDetails employee) {
+    public EmployeeProjectDetails updateEmpProjectDetails(EmployeeProjectDetails employee) {
         return entityManager.merge(employee);
     }
 
     @Override
-    public void deleteEmployee(Long id) {
+    public void deleteEmpProjectDetails(Long id) {
         EmployeeProjectDetails employee = entityManager.find(EmployeeProjectDetails.class, id);
         if (employee != null) {
             entityManager.remove(employee);
@@ -56,6 +56,22 @@ public class EmployeeProjectDaoImpl implements EmployeeProjectDao {
                         "SELECT e FROM EmployeeProjectDetails e WHERE e.skills = :skills",
                         EmployeeProjectDetails.class
                 ).setParameter("skills", skills)
+                .getResultList();
+    }
+
+    @Override public List<EmployeeProjectDetails> getDetailsByEmployeeName(String name) {
+        return entityManager.createQuery(
+                        "SELECT e FROM EmployeeProjectDetails e WHERE e.name = :name",
+                        EmployeeProjectDetails.class
+                ).setParameter("name", name)
+                .getResultList();
+    }
+
+    @Override public List<EmployeeProjectDetails> getDetailsByEmployeeEmailId(String emailId) {
+        return entityManager.createQuery(
+                        "SELECT e FROM EmployeeProjectDetails e WHERE e.emailId = :emailId",
+                        EmployeeProjectDetails.class
+                ).setParameter("emailId", emailId)
                 .getResultList();
     }
 

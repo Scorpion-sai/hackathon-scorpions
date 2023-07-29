@@ -2,7 +2,6 @@ package com.scorpions.dao.impl;
 
 import com.scorpions.dao.EmployeeDao;
 import com.scorpions.entities.Employee;
-import com.scorpions.entities.EmployeeProjectDetails;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.transaction.Transactional;
@@ -53,7 +52,6 @@ public class EmployeeDaoImpl implements EmployeeDao {
                 .setParameter("emailId", emailId)
                 .getSingleResult();
     }
-
 
     @Override
     public List<Employee> getAllEmployees() {

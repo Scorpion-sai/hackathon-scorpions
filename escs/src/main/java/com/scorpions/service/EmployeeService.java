@@ -14,5 +14,9 @@ public interface EmployeeService {
     Employee getEmployeeById(Long id);
 
     List<Employee> getAllEmployees();
+
+    List<Employee> getEmployeeByName(String Name);
+
+    Employee getEmployeeByEmailId(String emailId);
 }
 

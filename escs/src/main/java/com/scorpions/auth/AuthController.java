@@ -2,13 +2,19 @@ package com.scorpions.auth;
 
 import com.scorpions.auth.req.LoginRequest;
 import com.scorpions.auth.resp.LoginResponse;
+import com.scorpions.entities.Employee;
+import com.scorpions.service.EmployeeService;
 import java.time.Duration;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api")
 public class AuthController {
+
+    @Autowired
+    private EmployeeService employeeService;
 
     // Authentication APIs
 
@@ -18,6 +24,9 @@ public class AuthController {
         LoginResponse response = new LoginResponse();
         response.setAuthToken("JWT Token");
         response.setDuration(Duration.ofMinutes(30));
+        Employee employee = employeeService.getEmployeeByEmailId(request.getEmployeeId());
+        response.setUserId(employee.getId());
+        response.setEmailId(employee.getEmailId());
         // Return JWT token upon successful login
         return ResponseEntity.ok(response);
     }
