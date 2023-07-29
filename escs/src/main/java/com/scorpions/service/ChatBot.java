@@ -19,6 +19,7 @@ import org.slf4j.LoggerFactory;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
@@ -34,9 +35,10 @@ public class ChatBot {
 
         // message.addProperty(endpoint, apiKey);
         message.addProperty("content", input);
-        message.addProperty("role", "system");
+        message.addProperty("role", "user");
 
         messageList.add(message);
+    
 
         payload.addProperty("model", "gpt-3.5-turbo"); // model is important
         payload.add("messages", messageList);
@@ -55,31 +57,17 @@ public class ChatBot {
             System.out.println("PostRequest" + post);
             HttpEntity resEntity = response.getEntity();
             String resJsonString = new String(resEntity.getContent().readAllBytes(), StandardCharsets.UTF_8);
-            System.out.println(" \nresJsonString: " + resJsonString);
             JsonObject resJson = new JsonParser().parse(resJsonString).getAsJsonObject();
-
-            System.out.println(" \resJson: " + resJson);
 
             // Parse JSON response
             JsonArray responseArray = resJson.getAsJsonArray("choices");
-            System.out.println("\n\n Choices: " + responseArray.get(0));
             List<String> responseList = new ArrayList<>();
 
-            System.out.println("_-------------_-_-__----__---");
             for (int i = 0; i < responseArray.size(); i++) {
                 JsonObject responseObj = responseArray.get(i).getAsJsonObject();
-                System.out.println("resonseObk1: " + responseObj);
                 String responseString = responseObj.get("message").getAsJsonObject().get("content").getAsString();
-                System.out.println("responseString2 " + responseString);
                 responseList.add(responseString);
             }
-            if (responseList.isEmpty()) {
-                System.out.println("EmptyRespionse");
-            }
-            responseList.forEach(messageR -> System.out.println("\n\t messageback:   " + messageR));
-
-            // Convert response list to JSON and return it
-
             return responseList.toString();
         } catch (IOException e) {
             LOGGER.error("Error sending request: {}", e.getMessage());
