@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api")
 public class SearchController {
     // Search and Filter APIs
-
+/*
     @GetMapping("/search")
     public ResponseEntity<SearchEmployeesResponse> searchEmployees(@RequestParam(required = false) String tools,
             @RequestParam(required = false) String technology,
@@ -28,6 +28,6 @@ public class SearchController {
         FilterEmployeesResponse response = new FilterEmployeesResponse();
         // Populate response with filtered employees data
         return ResponseEntity.ok(response);
-    }
+    }*/
 
 }

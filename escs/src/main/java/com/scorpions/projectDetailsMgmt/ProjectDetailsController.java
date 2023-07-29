@@ -1,5 +1,9 @@
 package com.scorpions.projectDetailsMgmt;
 
+import com.scorpions.employeeMgmt.resp.EmployeeResponse;
+import com.scorpions.projectDetailsMgmt.req.ProjectDetailsRequest;
+import com.scorpions.projectDetailsMgmt.resp.AddProjectDetailsResponse;
+import com.scorpions.projectDetailsMgmt.resp.ProjectDetailsResponse;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -10,14 +14,16 @@ public class ProjectDetailsController {
     // Project Details APIs
 
     @PostMapping("/projects")
-    public ResponseEntity<String> addProjectDetails(@RequestBody AddProjectDetailsRequest request) {
+    public ResponseEntity<AddProjectDetailsResponse> addProjectDetails(@RequestBody ProjectDetailsRequest request) {
         // Implement adding project details for an employee
-        return ResponseEntity.ok("Project details added successfully");
+        AddProjectDetailsResponse response = new AddProjectDetailsResponse();
+        response.setProjectId("Project details added successfully");
+        return ResponseEntity.ok(response);
     }
 
     @PutMapping("/projects/{projectId}")
     public ResponseEntity<String> updateProjectDetails(@PathVariable String projectId,
-            @RequestBody UpdateProjectDetailsRequest request) {
+            @RequestBody ProjectDetailsRequest request) {
         // Implement updating project details for an employee by projectId
         return ResponseEntity.ok("Project details updated successfully");
     }
@@ -29,17 +35,17 @@ public class ProjectDetailsController {
     }
 
     @GetMapping("/projects/{projectId}")
-    public ResponseEntity<GetProjectDetailsResponse> getProjectDetails(@PathVariable String projectId) {
+    public ResponseEntity<ProjectDetailsResponse> getProjectDetails(@PathVariable String projectId) {
         // Implement getting project details by projectId
-        GetProjectDetailsResponse response = new GetProjectDetailsResponse();
+        ProjectDetailsResponse response = new ProjectDetailsResponse();
         // Populate response with project details data
         return ResponseEntity.ok(response);
     }
 
     @GetMapping("/projects/employee/{employeeId}")
-    public ResponseEntity<GetProjectDetailsByEmployeeIdResponse> getProjectDetailsByEmployeeId(@PathVariable String employeeId) {
+    public ResponseEntity<EmployeeResponse> getProjectDetailsByEmployeeId(@PathVariable String employeeId) {
         // Implement getting project details for an employee by employeeId
-        GetProjectDetailsByEmployeeIdResponse response = new GetProjectDetailsByEmployeeIdResponse();
+        EmployeeResponse response = new EmployeeResponse();
         // Populate response with project details data related to the employee
         return ResponseEntity.ok(response);
     }
