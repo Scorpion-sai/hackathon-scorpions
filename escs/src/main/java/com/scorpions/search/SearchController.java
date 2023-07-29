@@ -21,8 +21,9 @@ public class SearchController {
     private EmployeeProjectService empProjectService;
 
     
-    @GetMapping("/search")
+    @PostMapping("/search")
     public ResponseEntity<List<EmployeeProjectDetails>> searchEmployees(@RequestBody SearchRequest request) {
+        System.out.println(request);
         // Implement searching employees based on given parameters
         List<EmployeeProjectDetails> employeeProjectDetails = null;
         switch(request.getFilter()){
@@ -33,8 +34,11 @@ public class SearchController {
             case EMAILID -> {
                 employeeProjectDetails = empProjectService.getDetailsByEmailId(request.getValue());
             }
+            case EMPLOYEEID -> {
+                employeeProjectDetails = empProjectService.getDetailsByEmployeeId(Long.getLong(request.getValue()));
+            }
             case SKILLS -> {
-               employeeProjectDetails = empProjectService.getDetailsByEmployeeId(request.getValue());
+               employeeProjectDetails = empProjectService.getDetailsBySkills(request.getValue());
             }
         }
         // Populate response with search results data

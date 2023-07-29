@@ -15,7 +15,7 @@ public interface EmployeeProjectDao {
 
     List<EmployeeProjectDetails> getDetailsByProjectId(Long projectId);
 
-    List<EmployeeProjectDetails> getDetailsByEmployeeId(String skills);
+    List<EmployeeProjectDetails> getDetailsBySkills(String skills);
 
     List<EmployeeProjectDetails> getDetailsByEmployeeName(String name);
 
