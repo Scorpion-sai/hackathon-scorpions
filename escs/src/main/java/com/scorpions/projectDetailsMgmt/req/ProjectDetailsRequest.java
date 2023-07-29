@@ -6,14 +6,13 @@ import lombok.Data;
 
 @Data
 public class ProjectDetailsRequest {
-    private String projectId;
     private String projectName;
     private String projectDescription;
-    private String rolesAndResponsibility;
+    private String responsibility;
+    private String roles;
     private String achievements;
-    private List<String> skillsUsed;
-    private String durationOfWork;
+    private String skillsUsed;
     private boolean showWithoutAuth;
-    private List<EmployeeResponse> employees;
-    //private List<EmployeeResponse> previousEmployees;
+    private WorkDuration FromMonth;
+    private WorkDuration toMonth;
 }

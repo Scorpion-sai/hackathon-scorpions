@@ -5,7 +5,7 @@ import java.util.List;
 import lombok.Data;
 
 @Data
-public class EmployeeRequest {
+public class AddEmployeeRequest {
     private String name;
     private String emailId;
     private String gender;
@@ -14,4 +14,5 @@ public class EmployeeRequest {
     private List<String> skills;
     private String areaOfInterest;
     private boolean showWithoutAuth;
+    private List<ProjectDetailsRequest> projectsList;
 }

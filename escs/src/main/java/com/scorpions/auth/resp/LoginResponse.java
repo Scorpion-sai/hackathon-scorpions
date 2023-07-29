@@ -7,5 +7,7 @@ import lombok.Data;
 public class LoginResponse {
     private String authToken;
     private Duration duration;
+    private String emailId;
+    private Long userId;
 }
 

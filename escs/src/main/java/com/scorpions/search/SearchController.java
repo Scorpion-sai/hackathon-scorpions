@@ -1,33 +1,44 @@
 package com.scorpions.search;
 
+import com.scorpions.entities.Employee;
+import com.scorpions.entities.EmployeeProjectDetails;
+import com.scorpions.search.req.SearchRequest;
+import com.scorpions.search.resp.SearchResponse;
+import com.scorpions.service.EmployeeProjectService;
+import com.scorpions.service.EmployeeService;
+import java.util.ArrayList;
+import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api")
 public class SearchController {
     // Search and Filter APIs
-/*
-    @GetMapping("/search")
-    public ResponseEntity<SearchEmployeesResponse> searchEmployees(@RequestParam(required = false) String tools,
-            @RequestParam(required = false) String technology,
-            @RequestParam(required = false) String database,
-            @RequestParam(required = false) String framework,
-            @RequestParam(required = false) String name,
-            @RequestParam(required = false) String id) {
-        // Implement searching employees based on given parameters
-        SearchEmployeesResponse response = new SearchEmployeesResponse();
-        // Populate response with search results data
-        return ResponseEntity.ok(response);
-    }
 
-    @GetMapping("/filter")
-    public ResponseEntity<FilterEmployeesResponse> filterEmployees(@RequestParam(required = false) String skills,
-            @RequestParam(required = false) Integer experience,
-            @RequestParam(required = false) String projectId) {
-        // Implement filtering employees based on given parameters
-        FilterEmployeesResponse response = new FilterEmployeesResponse();
-        // Populate response with filtered employees data
-        return ResponseEntity.ok(response);
-    }*/
+    @Autowired
+    private EmployeeProjectService empProjectService;
+
+    
+    @GetMapping("/search")
+    public ResponseEntity<List<EmployeeProjectDetails>> searchEmployees(@RequestBody SearchRequest request) {
+        // Implement searching employees based on given parameters
+        List<EmployeeProjectDetails> employeeProjectDetails = null;
+        switch(request.getFilter()){
+            case NAME -> {
+                employeeProjectDetails = empProjectService.getDetailsByEmployeeName(request.getValue());
+                
+            }
+            case EMAILID -> {
+                employeeProjectDetails = empProjectService.getDetailsByEmailId(request.getValue());
+            }
+            case SKILLS -> {
+               employeeProjectDetails = empProjectService.getDetailsByEmployeeId(request.getValue());
+            }
+        }
+        // Populate response with search results data
+        return ResponseEntity.ok(employeeProjectDetails);
+    }
 
 }

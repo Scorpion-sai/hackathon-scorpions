@@ -39,6 +39,20 @@ public class EmployeeDaoImpl implements EmployeeDao {
         return entityManager.find(Employee.class, id);
     }
 
+    @Override public List<Employee> getEmployeeByName(String name) {
+        return entityManager.createQuery(
+                "SELECT e FROM Employee e WHERE e.name = :name", Employee.class)
+                .setParameter("name", name)
+                .getResultList();
+    }
+
+    @Override public Employee getEmployeeByEmailId(String emailId) {
+        return entityManager.createQuery(
+                        "SELECT e FROM Employee e WHERE e.emailId = :emailId", Employee.class)
+                .setParameter("emailId", emailId)
+                .getSingleResult();
+    }
+
     @Override
     public List<Employee> getAllEmployees() {
         return entityManager.createQuery("SELECT e FROM Employee e", Employee.class).getResultList();
