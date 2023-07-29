@@ -1,9 +1,15 @@
 package com.scorpions.projectDetailsMgmt;
 
 import com.scorpions.employeeMgmt.resp.EmployeeResponse;
+import com.scorpions.entities.ProjectDetails;
 import com.scorpions.projectDetailsMgmt.req.ProjectDetailsRequest;
 import com.scorpions.projectDetailsMgmt.resp.AddProjectDetailsResponse;
 import com.scorpions.projectDetailsMgmt.resp.ProjectDetailsResponse;
+import com.scorpions.service.EmployeeService;
+import com.scorpions.service.ProjectService;
+import com.scorpions.utils.Utils;
+import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,43 +17,46 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api")
 public class ProjectDetailsController {
 
+    @Autowired
+    private ProjectService projectService;
+
     // Project Details APIs
 
-    @PostMapping("/projects")
+    @PostMapping("/project")
     public ResponseEntity<AddProjectDetailsResponse> addProjectDetails(@RequestBody ProjectDetailsRequest request) {
         // Implement adding project details for an employee
+        ProjectDetails details = projectService.saveProject(Utils.toProjectDetails(request));
         AddProjectDetailsResponse response = new AddProjectDetailsResponse();
-        response.setProjectId("Project details added successfully");
+        response.setProjectId(details.getId());
         return ResponseEntity.ok(response);
     }
 
-    @PutMapping("/projects/{projectId}")
-    public ResponseEntity<String> updateProjectDetails(@PathVariable String projectId,
+    @PutMapping("/project/{projectId}")
+    public ResponseEntity<String> updateProjectDetails(@PathVariable Long projectId,
             @RequestBody ProjectDetailsRequest request) {
         // Implement updating project details for an employee by projectId
+        ProjectDetails details = projectService.updateProject(Utils.toProjectDetails(request, projectId));
         return ResponseEntity.ok("Project details updated successfully");
     }
 
-    @DeleteMapping("/projects/{projectId}")
-    public ResponseEntity<String> deleteProjectDetails(@PathVariable String projectId) {
+    @DeleteMapping("/project/{projectId}")
+    public ResponseEntity<String> deleteProjectDetails(@PathVariable Long projectId) {
         // Implement deleting project details for an employee by projectId
+        projectService.deleteProject(projectId);
         return ResponseEntity.ok("Project details deleted successfully");
     }
 
-    @GetMapping("/projects/{projectId}")
-    public ResponseEntity<ProjectDetailsResponse> getProjectDetails(@PathVariable String projectId) {
+    @GetMapping("/project/{projectId}")
+    public ResponseEntity<ProjectDetails> getProjectDetails(@PathVariable Long projectId) {
         // Implement getting project details by projectId
-        ProjectDetailsResponse response = new ProjectDetailsResponse();
         // Populate response with project details data
-        return ResponseEntity.ok(response);
+        return ResponseEntity.ok(projectService.getProjectById(projectId));
     }
 
-    @GetMapping("/projects/employee/{employeeId}")
-    public ResponseEntity<EmployeeResponse> getProjectDetailsByEmployeeId(@PathVariable String employeeId) {
-        // Implement getting project details for an employee by employeeId
-        EmployeeResponse response = new EmployeeResponse();
-        // Populate response with project details data related to the employee
-        return ResponseEntity.ok(response);
+    @GetMapping("/projects")
+    public ResponseEntity<List<ProjectDetails>> getAllProjectDetails() {
+        // Implement getting project details by projectId
+        // Populate response with project details data
+        return ResponseEntity.ok(projectService.getAllProjects());
     }
-
 }

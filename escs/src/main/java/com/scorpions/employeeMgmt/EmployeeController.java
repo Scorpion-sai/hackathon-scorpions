@@ -6,6 +6,7 @@ import com.scorpions.employeeMgmt.resp.EmployeeResponse;
 import com.scorpions.entities.Employee;
 import com.scorpions.projectDetailsMgmt.resp.ProjectDetailsResponse;
 import com.scorpions.service.EmployeeService;
+import com.scorpions.service.ProjectService;
 import com.scorpions.utils.Utils;
 import java.util.ArrayList;
 import java.util.List;
@@ -19,6 +20,9 @@ public class EmployeeController {
 
     @Autowired
     private EmployeeService employeeService;
+
+    @Autowired
+    private ProjectService projectService;
     // Employee Management APIs
 
     @PostMapping("/employee")
@@ -58,13 +62,4 @@ public class EmployeeController {
         // Populate response with Employee data
         return ResponseEntity.ok(employeeService.getEmployeeById(employeeId));
     }
-
-    @GetMapping("/employee/project/{projectId}")
-    public ResponseEntity<ProjectDetailsResponse> getEmployeeByProjectId(@PathVariable String projectId) {
-        // Implement getting employee Employees associated with a project by projectId
-        ProjectDetailsResponse response = new ProjectDetailsResponse();
-        // Populate response with Employee data related to the project
-        return ResponseEntity.ok(response);
-    }
-
 }

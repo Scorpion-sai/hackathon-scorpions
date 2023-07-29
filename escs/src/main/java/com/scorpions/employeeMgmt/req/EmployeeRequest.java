@@ -1,5 +1,6 @@
 package com.scorpions.employeeMgmt.req;
 
+import com.scorpions.projectDetailsMgmt.req.ProjectDetailsRequest;
 import java.util.List;
 import lombok.Data;
 
@@ -13,4 +14,6 @@ public class EmployeeRequest {
     private List<String> skills;
     private String areaOfInterest;
     private boolean showWithoutAuth;
+    
+    private List<ProjectDetailsRequest> projectsList;
 }
