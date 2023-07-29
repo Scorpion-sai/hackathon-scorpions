@@ -4,6 +4,7 @@ import { Button } from "antd";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { openModal } from "../features/modal/modalSlice";
+import { openSignUpModal } from "../features/modal/signUpSlice";
 import { UserCircle } from "../assets/Icons";
 
 const HeaderContainer = styled.nav`
@@ -41,7 +42,7 @@ const PageHeader = () => {
       <div>Projects</div>
       <div>Technologies</div>
       <LoginCorner>
-        {!profile.name ? (
+        {profile.name ? (
           <Link to="/profile">
             <div style={{ display: "flex" }}>
               <UserCircle />
@@ -51,7 +52,9 @@ const PageHeader = () => {
         ) : (
           <>
             <Button onClick={() => dispatch(openModal())}>Log in</Button>
-            <Button type="primary">Sign up</Button>
+            <Button type="primary" onClick={() => dispatch(openSignUpModal())}>
+              Sign up
+            </Button>
           </>
         )}
       </LoginCorner>

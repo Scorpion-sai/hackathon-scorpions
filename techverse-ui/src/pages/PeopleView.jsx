@@ -2,7 +2,6 @@ import { useDispatch, useSelector } from "react-redux";
 import PeopleDetail from "../components/PeopleDetail";
 import { useEffect } from "react";
 import { getPeople } from "../features/people/peopleSlice";
-import PeopleSkeletonView from "../components/PeopleSkeletonView";
 import { Row, Col, Spin } from "antd";
 import { LoadingOutlined } from "@ant-design/icons";
 
