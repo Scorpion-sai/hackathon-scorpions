@@ -6,8 +6,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { openModal } from "../features/modal/modalSlice";
 import { UserCircle } from "../assets/Icons";
 
-const HeaderContainer = styled.div`
+const HeaderContainer = styled.nav`
     height: 60px;
+    background-color: white;
+    z-index: 10;
     position: sticky;
     top: 0;
     border-bottom: 2px solid gray;
@@ -33,7 +35,9 @@ const PageHeader = () => {
         <Link to="/">TechVerse</Link>
       </div>
       <SearchBar />
-      <div>People</div>
+      <div>
+        <Link to="/people">People</Link>
+      </div>
       <div>Projects</div>
       <div>Technologies</div>
       <LoginCorner>
