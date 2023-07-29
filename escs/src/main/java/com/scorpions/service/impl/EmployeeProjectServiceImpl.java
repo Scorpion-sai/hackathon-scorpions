@@ -44,12 +44,20 @@ public class EmployeeProjectServiceImpl implements EmployeeProjectService {
     }
 
     @Override
-    public List<EmployeeProjectDetails> getDetailsByEmployeeId(String skills) {
-        return employeeProjectDao.getDetailsByEmployeeId(skills);
+    public List<EmployeeProjectDetails> getDetailsBySkills(String skills) {
+        return employeeProjectDao.getDetailsBySkills(skills);
     }
 
     @Override
     public EmployeeProjectDetails getDetailsByProjectIdEmployeeId(Long projectId, Long employeeId) {
         return employeeProjectDao.getDetailsByProjectIdEmployeeId(projectId, employeeId);
+    }
+
+    @Override public List<EmployeeProjectDetails> getDetailsByEmployeeName(String name) {
+        return employeeProjectDao.getDetailsByEmployeeName(name);
+    }
+
+    @Override public List<EmployeeProjectDetails> getDetailsByEmailId(String emailId) {
+        return employeeProjectDao.getDetailsByEmployeeName(emailId);
     }
 }

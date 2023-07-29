@@ -16,6 +16,7 @@ public class ProjectDaoImpl implements ProjectDao {
     private EntityManager entityManager;
 
     @Override
+    @Transactional
     public ProjectDetails saveProject(ProjectDetails project) {
         entityManager.persist(project);
         return project;
@@ -41,6 +42,6 @@ public class ProjectDaoImpl implements ProjectDao {
 
     @Override
     public List<ProjectDetails> getAllProjects() {
-        return entityManager.createQuery("SELECT p FROM Project p", ProjectDetails.class).getResultList();
+        return entityManager.createQuery("SELECT p FROM ProjectDetails p", ProjectDetails.class).getResultList();
     }
 }

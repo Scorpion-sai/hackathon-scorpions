@@ -11,7 +11,7 @@ public class AddEmployeeRequest {
     private String gender;
     private String currentDesignation;
     private int yearsOfExperience;
-    private List<String> skills;
+    private String skills;
     private String areaOfInterest;
     private boolean showWithoutAuth;
     private List<ProjectDetailsRequest> projectsList;

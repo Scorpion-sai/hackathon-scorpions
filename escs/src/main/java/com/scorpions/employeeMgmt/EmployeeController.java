@@ -3,17 +3,14 @@ package com.scorpions.employeeMgmt;
 import com.scorpions.employeeMgmt.req.AddEmployeeRequest;
 import com.scorpions.employeeMgmt.req.EmployeeRequest;
 import com.scorpions.employeeMgmt.resp.AddEmployeeResponse;
-import com.scorpions.employeeMgmt.resp.EmployeeResponse;
 import com.scorpions.entities.Employee;
 import com.scorpions.entities.EmployeeProjectDetails;
 import com.scorpions.entities.ProjectDetails;
-import com.scorpions.projectDetailsMgmt.resp.ProjectDetailsResponse;
 import com.scorpions.service.EmployeeProjectService;
 import com.scorpions.service.EmployeeService;
 import com.scorpions.service.ProjectService;
 import com.scorpions.utils.Utils;
-import java.time.Duration;
-import java.util.ArrayList;
+import jakarta.transaction.Transactional;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -35,38 +32,48 @@ public class EmployeeController {
     // Employee Management APIs
 
     @PostMapping("/employee")
+    @Transactional
     public ResponseEntity<AddEmployeeResponse> addEmployee(@RequestBody AddEmployeeRequest request) {
+        System.out.println(request);
         AddEmployeeResponse response = new AddEmployeeResponse();
         Employee employee = employeeService.saveEmployee(Utils.toEmployee(request));
-        request.getProjectsList().forEach(project -> {
-            ProjectDetails projectDetails = new ProjectDetails();
-            projectDetails.setProjectName(project.getProjectName());
-            projectDetails.setProjectDescription(project.getProjectName());
-            projectDetails.setShowWithoutAuth(project.isShowWithoutAuth());
-            ProjectDetails newProject = projectService.saveProject(projectDetails);
+        if(request.getProjectsList() != null && request.getProjectsList().size() > 0) {
+            request.getProjectsList().forEach(project -> {
+                ProjectDetails projectDetails = new ProjectDetails();
+                projectDetails.setProjectName(project.getProjectName());
+                projectDetails.setProjectDescription(project.getProjectName());
+                projectDetails.setShowWithoutAuth(project.isShowWithoutAuth());
+                ProjectDetails newProject = projectService.saveProject(projectDetails);
 
-            EmployeeProjectDetails empProjectDetails = new EmployeeProjectDetails(newProject.getId());
-            empProjectDetails.setEmployeeId(employee.getId());
-            empProjectDetails.setAchievements(project.getAchievements());
-            empProjectDetails.setRoles(project.getRoles());
-            empProjectDetails.setResponsibility(project.getResponsibility());
-            empProjectDetails.setSkillsUsed(project.getSkillsUsed());
-            empProjectDetails.setFromMonth(project.getFromMonth().getMonth());
-            empProjectDetails.setFromYear(project.getFromMonth().getYear());
-            empProjectDetails.setToMonth(project.getToMonth().getMonth());
-            empProjectDetails.setToYear(project.getToMonth().getYear());
-            empProjectService.saveEmpProjectDetails(empProjectDetails);
-        });
+                EmployeeProjectDetails empProjectDetails = new EmployeeProjectDetails(newProject.getId());
+                empProjectDetails.setEmployeeId(employee.getId());
+                empProjectDetails.setAchievements(project.getAchievements());
+                empProjectDetails.setRoles(project.getRoles());
+                empProjectDetails.setResponsibility(project.getResponsibility());
+                empProjectDetails.setSkillsUsed(List.of(request.getSkills().split(",")));
+                if(project.getFrom() != null){
+                    empProjectDetails.setFromMonth(project.getFrom().getMonth());
+                    empProjectDetails.setFromYear(project.getFrom().getYear()); 
+                }
+                if(project.getTo() != null) {
+                    empProjectDetails.setToMonth(project.getTo().getMonth());
+                    empProjectDetails.setToYear(project.getTo().getYear());
+                }
+                empProjectService.saveEmpProjectDetails(empProjectDetails);
+            });
+        }
         
         response.setEmployeeId(employee.getId());
         // Implement adding/updating employee Employee details
         return ResponseEntity.ok(response);
     }
 
+    @Transactional
     @PutMapping("/employee/{employeeId}")
     public ResponseEntity<String> updateEmployee(
             @PathVariable Long employeeId,
             @RequestBody EmployeeRequest request) {
+        System.out.println(request);
         // Implement updating employee Employee details
         employeeService.updateEmployee(Utils.toEmployee(request, employeeId));
         return ResponseEntity.ok("Employee updated successfully");
@@ -94,15 +101,15 @@ public class EmployeeController {
         return ResponseEntity.ok(employeeService.getEmployeeById(employeeId));
     }
 
-    @GetMapping("/employee/{name}")
-    public ResponseEntity<List<Employee>> getEmployeeByName(@PathVariable String name) {
+    @GetMapping("/employeeByName")
+    public ResponseEntity<List<Employee>> getEmployeeByName(@RequestParam String name) {
         // Implement getting employee Employee by employeeId
         // Populate response with Employee data
         return ResponseEntity.ok(employeeService.getEmployeeByName(name));
     }
 
-    @GetMapping("/employee/{emailId}")
-    public ResponseEntity<Employee> getEmployeeByEmailId(@PathVariable String emailId) {
+    @GetMapping("/employeeByEmailId")
+    public ResponseEntity<Employee> getEmployeeByEmailId(@RequestParam String emailId) {
         // Implement getting employee Employee by employeeId
         // Populate response with Employee data
         return ResponseEntity.ok(employeeService.getEmployeeByEmailId(emailId));

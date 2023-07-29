@@ -9,6 +9,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.transaction.Transactional;
 import java.time.Duration;
 import java.time.Month;
 import java.util.List;
@@ -16,7 +17,8 @@ import lombok.Data;
 import lombok.NonNull;
 
 @Entity
-@Table(name = "projectDetails")
+@Transactional
+@Table(name = "employee_project_details")
 @Data
 public class EmployeeProjectDetails {
     @Id
@@ -34,7 +36,10 @@ public class EmployeeProjectDetails {
     private String responsibility;
     private String roles;
     private String achievements;
-    private String skillsUsed;
+    @ElementCollection
+    @CollectionTable(name = "employee_project_details_skills", joinColumns = @JoinColumn(name = "employee_project_details_id"))
+    @Column(name = "skills_used")
+    private List<String> skillsUsed;
     private Month fromMonth;
     private int fromYear;
     private Month toMonth;

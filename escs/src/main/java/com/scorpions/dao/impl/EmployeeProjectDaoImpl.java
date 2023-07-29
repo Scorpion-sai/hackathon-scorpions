@@ -51,27 +51,27 @@ public class EmployeeProjectDaoImpl implements EmployeeProjectDao {
     }
 
     @Override
-    public List<EmployeeProjectDetails> getDetailsByEmployeeId(String skills) {
+    public List<EmployeeProjectDetails> getDetailsBySkills(String skills) {
         return entityManager.createQuery(
-                        "SELECT e FROM EmployeeProjectDetails e WHERE e.skills = :skills",
+                        "SELECT e FROM EmployeeProjectDetails e WHERE e.skillsUsed = :skillsUsed",
                         EmployeeProjectDetails.class
-                ).setParameter("skills", skills)
+                ).setParameter("skillsUsed", skills)
                 .getResultList();
     }
 
     @Override public List<EmployeeProjectDetails> getDetailsByEmployeeName(String name) {
         return entityManager.createQuery(
-                        "SELECT e FROM EmployeeProjectDetails e WHERE e.name = :name",
+                        "SELECT e FROM EmployeeProjectDetails e WHERE e.employeeName = :employeeName",
                         EmployeeProjectDetails.class
-                ).setParameter("name", name)
+                ).setParameter("employeeName", name)
                 .getResultList();
     }
 
     @Override public List<EmployeeProjectDetails> getDetailsByEmployeeEmailId(String emailId) {
         return entityManager.createQuery(
-                        "SELECT e FROM EmployeeProjectDetails e WHERE e.emailId = :emailId",
+                        "SELECT e FROM EmployeeProjectDetails e WHERE e.employeeEmailId = :employeeEmailId",
                         EmployeeProjectDetails.class
-                ).setParameter("emailId", emailId)
+                ).setParameter("employeeEmailId", emailId)
                 .getResultList();
     }
 
