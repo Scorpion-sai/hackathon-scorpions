@@ -7,6 +7,7 @@ import SignUp from "./pages/SignUp";
 import PageHeader from "./components/PageHeader";
 import PersonalProfile from "./pages/PersonalProfile";
 import PeopleView from "./pages/PeopleView";
+import AddProjectForm from "./pages/AddProject";
 
 const App = () => {
   return (
@@ -22,6 +23,7 @@ const App = () => {
           </Routes>
           <LogInModal />
           <SignUp />
+          <AddProjectForm />
         </Col>
       </Row>
     </>

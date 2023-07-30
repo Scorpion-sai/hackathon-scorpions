@@ -33,6 +33,19 @@ const PeopleView = () => {
       </div>
     );
   }
+  if (!peopleDetail?.length || error) {
+    return (
+      <div
+        style={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
+        No people information available at this moment.
+      </div>
+    );
+  }
   return (
     <Row gutter={[16, 16]}>
       {peopleDetail.map((person, index) => (

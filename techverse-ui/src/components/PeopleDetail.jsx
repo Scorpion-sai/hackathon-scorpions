@@ -46,7 +46,6 @@ const CardBody = styled.ul`
 `;
 
 const PeopleDetail = ({ person }) => {
-  const initial = person.name[0];
   const techColorMap = {
     javascript: "#ecd300",
     java: "#ec272b",

@@ -149,7 +149,6 @@ const SignUpForm = () => {
               </span>
             }
             name="yearsOfExperience"
-            style={{ width: "175%" }}
           >
             <InputNumber min={0} style={{ width: "100%" }} />
           </Form.Item>
