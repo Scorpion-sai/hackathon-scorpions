@@ -15,7 +15,7 @@ public interface EmployeeDao {
 
     List<Employee> getEmployeeByName(String Name);
 
-    Employee getEmployeeByEmailId(String emailId);
+    List<Employee> getEmployeeByEmailId(String emailId);
     
     List<Employee> getAllEmployees();
 }

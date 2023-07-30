@@ -13,6 +13,8 @@ import com.scorpions.utils.Utils;
 import jakarta.transaction.Transactional;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -79,12 +81,13 @@ public class EmployeeController {
         return ResponseEntity.ok("Employee updated successfully");
     }
 
+    @Transactional
     @DeleteMapping("/employee/{employeeId}")
     public ResponseEntity<String> deleteEmployee(@PathVariable Long employeeId) {
         // Implement deleting employee Employee by employeeId
-        employeeService.deleteEmployee(employeeId);
         List<EmployeeProjectDetails> projectEmpMap = empProjectService.getDetailsByEmployeeId(employeeId);
         projectEmpMap.forEach(project -> empProjectService.deleteEmpProjectDetails(project.getId()));
+        employeeService.deleteEmployee(employeeId);
         return ResponseEntity.ok("Employee deleted successfully");
     }
 
@@ -110,8 +113,16 @@ public class EmployeeController {
 
     @GetMapping("/employeeByEmailId")
     public ResponseEntity<Employee> getEmployeeByEmailId(@RequestParam String emailId) {
-        // Implement getting employee Employee by employeeId
-        // Populate response with Employee data
-        return ResponseEntity.ok(employeeService.getEmployeeByEmailId(emailId));
+        try {
+            // Implement getting employee Employee by employeeId
+            // Populate response with Employee data
+            List<Employee> employeeList = employeeService.getEmployeeByEmailId(emailId);
+            if(!employeeList.isEmpty()){
+                return ResponseEntity.ok(employeeList.get(0));
+            }
+            return (ResponseEntity<Employee>) ResponseEntity.noContent();
+        }catch(Exception e){
+            return (ResponseEntity<Employee>) ResponseEntity.noContent();
+        }
     }
 }

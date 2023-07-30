@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 public class ChatGptService {
 
     String endpoint = "https://api.openai.com/v1/chat/completions";
-    String apiKey = "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";
+    String apiKey = "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";
 
     // Prompt user for input string
     String response = "empty";

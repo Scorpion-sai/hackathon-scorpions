@@ -46,11 +46,11 @@ public class EmployeeDaoImpl implements EmployeeDao {
                 .getResultList();
     }
 
-    @Override public Employee getEmployeeByEmailId(String emailId) {
+    @Override public List<Employee> getEmployeeByEmailId(String emailId) {
         return entityManager.createQuery(
                         "SELECT e FROM Employee e WHERE e.emailId = :emailId", Employee.class)
                 .setParameter("emailId", emailId)
-                .getSingleResult();
+                .getResultList();
     }
 
     @Override

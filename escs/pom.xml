@@ -63,16 +63,6 @@
 			<artifactId>h2</artifactId>
 			<scope>runtime</scope>
 		</dependency>
-		<dependency>
-        	<groupId>com.amazonaws</groupId>
-       	 	<artifactId>aws-java-sdk-dynamodb</artifactId>
-       		 <version>1.11.64</version>
-    	</dependency>
-    	<dependency>
-			<groupId>com.github.derjust</groupId>
-			<artifactId>spring-data-dynamodb</artifactId>
-			<version>5.1.0</version>
-    	</dependency>
 	   <dependency>
 			<groupId>org.apache.commons</groupId>
 			<artifactId>commons-lang3</artifactId>
@@ -88,12 +78,6 @@
 			<artifactId>httpclient</artifactId>
 			<version>4.5.13</version>
 		</dependency>
-
-
-
-
-
-
     </dependencies>
 
 	<build>

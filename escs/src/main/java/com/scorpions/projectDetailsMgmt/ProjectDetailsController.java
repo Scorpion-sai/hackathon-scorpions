@@ -68,12 +68,13 @@ public class ProjectDetailsController {
         return ResponseEntity.ok("Project details updated successfully");
     }
 
+    @Transactional
     @DeleteMapping("/project/{projectId}")
     public ResponseEntity<String> deleteProjectDetails(@PathVariable Long projectId) {
         // Implement deleting project details for an employee by projectId
-        projectService.deleteProject(projectId);
         List<EmployeeProjectDetails> details = empProjectService.getDetailsByProjectId(projectId);
         details.forEach(project -> empProjectService.deleteEmpProjectDetails(project.getId()));
+        projectService.deleteProject(projectId);
         return ResponseEntity.ok("Project details deleted successfully");
     }
 
