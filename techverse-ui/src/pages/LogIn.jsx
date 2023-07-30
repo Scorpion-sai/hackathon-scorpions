@@ -2,6 +2,7 @@ import { Form, Input, Modal } from "antd";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { closeModal, getAuthentication } from "../features/modal/modalSlice";
+import { openSignUpModal } from "../features/modal/signUpSlice";
 
 const LogInModal = () => {
   const { isOpen, isLoading } = useSelector((store) => store.modal);
@@ -15,6 +16,10 @@ const LogInModal = () => {
     form.resetFields();
     dispatch(closeModal());
   };
+  const onSignUp = () => {
+    closeModalContainer();
+    dispatch(openSignUpModal());
+  };
 
   const handleOk = async () => {
     if (isLoading) {
@@ -22,6 +27,7 @@ const LogInModal = () => {
     }
     try {
       const values = await form.validateFields();
+      console.log(values);
       dispatch(getAuthentication(values));
     } catch (errorInfo) {
       console.log("Validation Failed:", errorInfo);
@@ -42,7 +48,7 @@ const LogInModal = () => {
       <Form
         form={form}
         layout="horizontal"
-        name="form_in_modal"
+        name="loginForm"
         initialValues={{ modifier: "public" }}
         labelCol={{
           span: 5,
@@ -50,7 +56,7 @@ const LogInModal = () => {
       >
         <Form.Item
           label="Email"
-          name="username"
+          name="employeeId"
           rules={[
             {
               required: true,
@@ -61,7 +67,7 @@ const LogInModal = () => {
           <Input disabled={isLoading} />
         </Form.Item>
 
-        <Form.Item
+        {/* <Form.Item
           label="Password"
           name="password"
           rules={[
@@ -72,10 +78,10 @@ const LogInModal = () => {
           ]}
         >
           <Input.Password disabled={isLoading} />
-        </Form.Item>
+        </Form.Item> */}
         <p style={{ textAlign: "center" }}>
           <span>Don&apos;t have an account?</span>{" "}
-          <Link to="/signup" onClick={closeModalContainer}>
+          <Link to="/signup" onClick={onSignUp}>
             Sign Up
           </Link>
         </p>
@@ -85,88 +91,3 @@ const LogInModal = () => {
 };
 
 export default LogInModal;
-
-// import { Button, Checkbox, Form, Input } from "antd";
-// import { styled } from "styled-components";
-// const onFinish = (values) => {
-//   console.log("Success:", values);
-// };
-// const onFinishFailed = (errorInfo) => {
-//   console.log("Failed:", errorInfo);
-// };
-
-// const CenteredContainer = styled.div`
-//   display: flex;
-//   justify-content: center;
-//   align-items: center;
-//   height: 60vh;
-// `;
-// const FormContainer = styled.div`
-//     background-color: white;
-//     width: fit-content;
-//     padding: 40px;
-//     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-// `;
-
-// const LogIn = () => {
-//   return (
-//     <CenteredContainer>
-//       <FormContainer>
-//         <Form
-//           name="basic"
-//           labelCol={{
-//             span: 8,
-//           }}
-//           wrapperCol={{
-//             span: 24,
-//           }}
-//           initialValues={{
-//             remember: true,
-//           }}
-//           onFinish={onFinish}
-//           onFinishFailed={onFinishFailed}
-//           autoComplete="off"
-//         >
-//           <Form.Item
-//             label="Username"
-//             name="username"
-//             rules={[
-//               {
-//                 required: true,
-//                 message: "Please input your username!",
-//               },
-//             ]}
-//           >
-//             <Input />
-//           </Form.Item>
-
-//           <Form.Item
-//             label="Password"
-//             name="password"
-//             rules={[
-//               {
-//                 required: true,
-//                 message: "Please input your password!",
-//               },
-//             ]}
-//           >
-//             <Input.Password />
-//           </Form.Item>
-
-//           <Form.Item
-//             wrapperCol={{
-//               offset: -10,
-//               span: 240,
-//             }}
-//           >
-//             <Button type="primary" htmlType="submit">
-//               Submit
-//             </Button>
-//           </Form.Item>
-//         </Form>
-//       </FormContainer>
-//     </CenteredContainer>
-//   );
-// };
-
-// export default LogIn;

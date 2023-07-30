@@ -55,8 +55,8 @@ const options = [
 
 const StyledModal = styled(Modal)`
 .ant-modal-body {
-  max-height: 400px; /* Adjust the height as per your requirement */
-  overflow-y: auto;
+  /* max-height: 400px;
+  overflow-y: auto; */
   padding-right: 16px; 
 }`;
 
@@ -104,45 +104,28 @@ const SignUpForm = () => {
         initialValues={{ modifier: "public" }}
       >
         <Form.Item
-          label="First Name"
-          name="firstName"
+          label="Name"
+          name="name"
           rules={[
             {
               required: true,
-              message: "Please input your First Name!",
+              message: "Please input your Name!",
             },
           ]}
         >
           <Input />
         </Form.Item>
-
         <Form.Item
-          label="Last Name"
-          name="lastName"
+          label="Email"
+          name="emailId"
           rules={[
-            {
-              required: true,
-              message: "Please input your Last Name!",
-            },
+            { required: true, message: "Please enter your email address" },
+            { type: "email", message: "Please enter a valid email address" },
           ]}
         >
           <Input />
         </Form.Item>
         <Space style={{ display: "flex" }} align="start">
-          <Form.Item
-            label="Mobile"
-            name="mobile"
-            rules={[
-              { required: true, message: "Please enter your mobile number" },
-              {
-                pattern: /^(\+\d{1,3}[- ]?)?\d{10}$/,
-                message: "Please enter a valid mobile number",
-              },
-            ]}
-            style={{ flex: 1, marginRight: 8 }}
-          >
-            <Input />
-          </Form.Item>
           <Form.Item
             label="Date of Birth"
             name="dob"
@@ -153,45 +136,38 @@ const SignUpForm = () => {
           >
             <DatePicker />
           </Form.Item>
+          <Form.Item
+            label={
+              <span
+                style={{
+                  whiteSpace: "normal",
+                  width: "100%",
+                  display: "inline-block",
+                }}
+              >
+                Experience (in Years)
+              </span>
+            }
+            name="yearsOfExperience"
+          >
+            <InputNumber min={0} style={{ width: "100%" }} />
+          </Form.Item>
         </Space>
 
         <Form.Item
-          label="Email"
-          name="email"
+          label="Job Role"
+          name="currentDesignation"
           rules={[
-            { required: true, message: "Please enter your email address" },
-            { type: "email", message: "Please enter a valid email address" },
+            {
+              required: true,
+              message: "Please enter your current designation",
+            },
           ]}
         >
           <Input />
         </Form.Item>
 
-        <Form.Item
-          label="Job Role"
-          name="jobRole"
-          rules={[{ required: true, message: "Please enter your job role" }]}
-        >
-          <Input />
-        </Form.Item>
-
-        <Form.Item
-          label={
-            <span
-              style={{
-                whiteSpace: "normal",
-                width: "100%",
-                display: "inline-block",
-              }}
-            >
-              Experience (in Years)
-            </span>
-          }
-          name="experience"
-        >
-          <InputNumber min={0} style={{ width: "100%" }} />
-        </Form.Item>
-
-        <Form.Item label="Technologies" name="technologies">
+        <Form.Item label="Technologies" name="skills">
           <Select
             mode="tags"
             style={{ width: "100%" }}
@@ -200,7 +176,20 @@ const SignUpForm = () => {
           />
         </Form.Item>
 
-        <Form.Item label="Projects">
+        <Form.Item
+          label="Area of Interest"
+          name="areaOfInterest"
+          rules={[
+            {
+              required: true,
+              message: "Please enter your area of interest",
+            },
+          ]}
+        >
+          <Input />
+        </Form.Item>
+
+        {/* <Form.Item label="Projects">
           <Form.List name="projects">
             {(fields, { add, remove }) => (
               <>
@@ -246,7 +235,7 @@ const SignUpForm = () => {
               </>
             )}
           </Form.List>
-        </Form.Item>
+        </Form.Item> */}
       </Form>
     </StyledModal>
   );

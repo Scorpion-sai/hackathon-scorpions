@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import PeopleDetail from "../components/PeopleDetail";
 import { useEffect } from "react";
-import { getPeople } from "../features/people/peopleSlice";
+import { getAllPeople } from "../features/people/peopleSlice";
 import { Row, Col, Spin } from "antd";
 import { LoadingOutlined } from "@ant-design/icons";
 
@@ -12,7 +12,7 @@ const PeopleView = () => {
   );
   useEffect(() => {
     if (!peopleDetail.length) {
-      dispatch(getPeople());
+      dispatch(getAllPeople());
     }
   }, []);
 
@@ -30,6 +30,19 @@ const PeopleView = () => {
           size="large"
           // indicator={<LoadingOutlined style={{ fontSize: 24 }} spin />}
         />
+      </div>
+    );
+  }
+  if (!peopleDetail?.length || error) {
+    return (
+      <div
+        style={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
+        No people information available at this moment.
       </div>
     );
   }

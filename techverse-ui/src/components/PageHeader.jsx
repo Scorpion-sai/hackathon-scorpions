@@ -1,10 +1,11 @@
 import { styled } from "styled-components";
 import SearchBar from "./Searchbar";
-import { Button } from "antd";
-import { Link } from "react-router-dom";
+import { Button, Dropdown } from "antd";
+import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { openModal } from "../features/modal/modalSlice";
+import { openModal, logout } from "../features/modal/modalSlice";
 import { openSignUpModal } from "../features/modal/signUpSlice";
+import { openModal as openAddProjectModal } from "../features/modal/addProjectSlice";
 import { UserCircle } from "../assets/Icons";
 
 const HeaderContainer = styled.nav`
@@ -28,27 +29,72 @@ const LoginCorner = styled.div`
 
 const PageHeader = () => {
   const dispatch = useDispatch();
-  const { profile } = useSelector((store) => store.modal);
+  const navigate = useNavigate();
+  const {
+    profile: { employeeId: mailId },
+  } = useSelector((store) => store.modal);
+  const {
+    profile: { employeeId },
+  } = useSelector((store) => store.signUp);
+  const isSignedIn = mailId || employeeId;
+
+  const items = [
+    {
+      label: (
+        <Link onClick={() => dispatch(openAddProjectModal())}>
+          Add Projects
+        </Link>
+      ),
+      key: "0",
+    },
+    {
+      label: (
+        <Link
+          to="/"
+          onClick={() => {
+            navigate("/");
+            dispatch(logout());
+          }}
+        >
+          Logout
+        </Link>
+      ),
+      key: "1",
+    },
+  ];
 
   return (
     <HeaderContainer>
       <div>
-        <Link to="/">TechVerse</Link>
+        <Link to="/">
+          <img
+            src="../../public/techverse.png"
+            alt="logo"
+            height="30"
+            width="30"
+          />
+        </Link>
       </div>
-      <SearchBar />
-      <div>
-        <Link to="/people">People</Link>
-      </div>
-      <div>Projects</div>
-      <div>Technologies</div>
+      {isSignedIn && (
+        <>
+          <SearchBar />
+          <div>
+            <Link to="/people">People</Link>
+          </div>
+          {/* <div>Projects</div>
+          <div>Technologies</div> */}
+        </>
+      )}
       <LoginCorner>
-        {profile.name ? (
-          <Link to="/profile">
-            <div style={{ display: "flex" }}>
-              <UserCircle />
-              Profile
-            </div>
-          </Link>
+        {isSignedIn ? (
+          <Dropdown menu={{ items }}>
+            <Link to="/profile">
+              <div style={{ display: "flex" }}>
+                <UserCircle />
+                Profile
+              </div>
+            </Link>
+          </Dropdown>
         ) : (
           <>
             <Button onClick={() => dispatch(openModal())}>Log in</Button>

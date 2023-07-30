@@ -1,57 +1,15 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
-const url = "https://course-api.com/react-useReducer-cart-project";
+const url = "http://localhost:8080/api/employees";
 
 const initialState = {
   isLoading: false,
-  peopleDetail: [
-    {
-      id: "1",
-      name: "John",
-      job: "Senior Architect",
-      email: "john@gmail.com",
-      mobile: "123456",
-      technologies: ["Java", "Kafka"],
-      experience: "5",
-    },
-    {
-      id: "1",
-      name: "John",
-      job: "Senior Architect",
-      email: "john@gmail.com",
-      mobile: "123456",
-      technologies: ["JavaScript", "Node"],
-    },
-    {
-      id: "1",
-      name: "John",
-      job: "Senior Architect",
-      email: "john@gmail.com",
-      mobile: "123456",
-      technologies: ["JavaScript", "Node"],
-    },
-    {
-      id: "1",
-      name: "John",
-      job: "Senior Architect",
-      email: "john@gmail.com",
-      mobile: "123456",
-      technologies: ["JavaScript", "Node"],
-    },
-    {
-      id: "1",
-      name: "John",
-      job: "Senior Architect",
-      email: "john@gmail.com",
-      mobile: "123456",
-      technologies: ["JavaScript", "Node"],
-    },
-  ],
+  peopleDetail: [],
 };
 
-export const getPeople = createAsyncThunk(
-  "people/getPeople",
+export const getAllPeople = createAsyncThunk(
+  "people/getAllPeople",
   async (payload, thunkAPI) => {
     try {
       const resp = await axios(url);
@@ -66,15 +24,14 @@ const modalSlice = createSlice({
   name: "people",
   initialState,
   extraReducers: (builder) => {
-    builder.addCase(getPeople.pending, (state) => {
+    builder.addCase(getAllPeople.pending, (state) => {
       state.isLoading = true;
     });
-    builder.addCase(getPeople.fulfilled, (state, action) => {
+    builder.addCase(getAllPeople.fulfilled, (state, action) => {
       state.isLoading = false;
-      // TODO: uncomment
-      //   state.peopleDetail = action.payload;
+      state.peopleDetail = action.payload;
     });
-    builder.addCase(getPeople.rejected, (state, action) => {
+    builder.addCase(getAllPeople.rejected, (state, action) => {
       state.isLoading = false;
       console.log(action);
     });
